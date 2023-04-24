@@ -10,12 +10,12 @@
 #include <string.h>
 #include <stdlib.h>
 
-#include "oai-oran-protolib/ran_messages.pb-c.h"
+#include "oai-oran-protolib/builds/ran_messages.pb-c.h"
 #include "E2_requests.h"
 #include "gnb_message_handlers.h"
 
 
-void handle_master_message(void* buf, int buflen, int out_socket, struct sockaddr_in servaddr){
+void handle_master_message_local(void* buf, int buflen, int out_socket, struct sockaddr_in servaddr){
     RANMessage* in_mess = ran_message__unpack(NULL, (size_t)buflen, buf);
     if (!in_mess){
         printf("error decoding received message, printing for debug:\n");
@@ -38,7 +38,7 @@ void handle_master_message(void* buf, int buflen, int out_socket, struct sockadd
             break;
         case RAN_MESSAGE_TYPE__INDICATION_RESPONSE:
             printf("Indication response message received\n");
-            handle_indication_response(in_mess, out_socket, servaddr);
+            build_indication_response(in_mess, out_socket, servaddr);
             break;
         case RAN_MESSAGE_TYPE__CONTROL:
             printf("Control message received\n");
