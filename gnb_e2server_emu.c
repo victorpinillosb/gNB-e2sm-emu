@@ -11,7 +11,6 @@
 #include <stdlib.h>
 
 #include "oai-oran-protolib/builds/ran_messages.pb-c.h"
-#include "E2_requests.h"
 #include "gnb_message_handlers.h"
 
 

@@ -1,8 +1,6 @@
 cmake_minimum_required(VERSION 2.8)
-project(NANOPB_CMAKE_SIMPLE C)
+project(GNB-E2SM-EMU C)
 
-#nanopb_generate_cpp(PROTO_SRCS PROTO_HDRS proto/e2.proto)
-#include_directories(${CMAKE_CURRENT_BINARY_DIR} common)
 include_directories(proto)
 
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Werror -g -O0")
@@ -16,7 +14,6 @@ set(CMAKE_EXE_LINKER_FLAGS "${PROTOBUF_LINK_FLAG}")
 
 add_executable(gnb_e2server_emu
         gnb_e2server_emu.c
-        E2_requests.h
         oai-oran-protolib/builds/ran_messages.pb-c.h
         oai-oran-protolib/builds/ran_messages.pb-c.c
         gnb_message_handlers.c
