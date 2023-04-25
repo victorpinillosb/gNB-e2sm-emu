@@ -26,6 +26,7 @@ void initialize_ues_if_needed(){
         connected_ue_list[ue].prop_1 = 1;
         connected_ue_list[ue].prop_2 = 2;
     }
+    is_initialized = true;
 }
 
 /*
