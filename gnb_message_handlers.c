@@ -4,14 +4,14 @@
 
 #include "gnb_message_handlers.h"
 #include <stdbool.h>
-#define CONNECTED_UES 1
+#define CONNECTED_UES 4
 
 int gnb_id = 0;
 bool is_initialized = false;
 typedef struct {
     int rnti;
-    int prop_1;
-    int prop_2;
+    bool prop_1;
+    float prop_2;
 } ue_struct;
 ue_struct connected_ue_list[CONNECTED_UES];
 
@@ -23,8 +23,8 @@ void initialize_ues_if_needed(){
         return;
     for (int ue=0;ue<CONNECTED_UES;ue++){
         connected_ue_list[ue].rnti = rand();
-        connected_ue_list[ue].prop_1 = 1;
-        connected_ue_list[ue].prop_2 = 2;
+        connected_ue_list[ue].prop_1 = false;
+        connected_ue_list[ue].prop_2 = -1;
     }
     is_initialized = true;
 }
@@ -182,7 +182,7 @@ void apply_properties_to_ue_list(UeListM* ue_list){
     }
 }
 
-void set_ue_properties(int rnti, float prop_1, float prop_2){
+void set_ue_properties(int rnti, bool prop_1, float prop_2){
 
     // iterate ue list until rnti is found
     bool rnti_not_found = true;
@@ -273,13 +273,23 @@ UeListM* build_ue_list_message(){
 
         // read mesures and add to message (actually just send random data)
 
-        // first notify that field is present in the message (this is an optional field)
+        // measures
         ue_info_list[i]->has_meas_type_1 = 1;
         ue_info_list[i]->meas_type_1 = rand();
         ue_info_list[i]->has_meas_type_2 = 1;
         ue_info_list[i]->meas_type_2 = rand();
         ue_info_list[i]->has_meas_type_3 = 1;
         ue_info_list[i]->meas_type_3 = rand();
+
+        // properties
+        ue_info_list[i]->has_prop_1 = 1;
+        ue_info_list[i]->prop_1 = connected_ue_list[i].prop_1;
+        if(connected_ue_list[i].prop_2 > -1){
+            ue_info_list[i]->has_prop_2 = 1;
+            ue_info_list[i]->prop_2 = connected_ue_list[i].prop_2;
+        }
+
+
     }
     // add a null terminator to the list
     ue_info_list[CONNECTED_UES] = NULL;
