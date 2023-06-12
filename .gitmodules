@@ -1,4 +1,5 @@
 [submodule "oai-oran-protolib"]
 	path = oai-oran-protolib
-	url = https://github.com/ANTLab-polimi/oai-oran-protolib.git
+	#url = https://github.com/ANTLab-polimi/oai-oran-protolib.git
+	url = https://github.com/victorpinillosb/oai-oran-protolib.git
 	branch = mrn-base
